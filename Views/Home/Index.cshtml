@@ -1,0 +1,29 @@
+﻿
+<div class="container-fluid p-5" style="background-color: #2d2d2d;">
+    <div class="text-center mb-5">
+        <h1 style="font-family: 'Press Start 2P', cursive; color: #e91e63;">Pokédex</h1>
+        <p style="font-family: 'Press Start 2P', cursive; color: #ffffff;">¡Explora todas las especies Pokémon!</p>
+    </div>
+    <div class="row justify-content-center">
+        @foreach (var species in Model)
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="card text-center shadow" style="background-color: rgba(66,66,66,0.9); border: none; border-radius: 20px; overflow: hidden;">
+                    <div class="card-header" style="background-color: #e91e63; color: #fff; font-family: 'Press Start 2P', cursive; border-bottom: 2px solid #fff;">
+                        @species.Name
+                    </div>
+                    <img src="@species.ImageUrl" class="card-img-top p-3" alt="@species.Name" style="height: 180px; object-fit: contain; background: #fff;">
+                    <div class="card-body">
+                        <a asp-controller="Home"
+                           asp-action="Details"
+                           asp-route-name="@species.Name"
+                           class="btn btn-outline-light"
+                           style="font-family: 'Press Start 2P', cursive;">
+                            Ver Detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

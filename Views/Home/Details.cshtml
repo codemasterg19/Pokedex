@@ -1,0 +1,40 @@
+﻿@model Pokedex.Models.PokemonSpecies
+
+<div class="container py-5">
+    <div class="card shadow-lg" style="max-width: 700px; margin: 0 auto; border-radius: 15px; overflow: hidden; background: #1a1a1a;">
+        <!-- Cabecera con el nombre del Pokémon -->
+        <div class="card-header text-center" style="background: linear-gradient(135deg, #ff416c, #ff4b2b); color: #ffffff; font-family: 'Press Start 2P', cursive; font-size: 1.2rem; padding: 20px;">
+            @Model.Name
+        </div>
+        <div class="card-body" style="color: #ffffff; font-family: 'Press Start 2P', cursive;">
+            <div class="row">
+                <!-- Columna de la imagen ampliada (ahora ocupa 6 columnas) -->
+                <div class="col-md-6 text-center">
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid" style="max-height: 500px; width: 100%; object-fit: contain; margin-bottom: 15px;" />
+                </div>
+                <!-- Columna de los detalles -->
+                <div class="col-md-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" style="background: transparent; border: none; color: #ffffff;"><strong>ID:</strong> @Model.Id</li>
+                        <li class="list-group-item" style="background: transparent; border: none; color: #ffffff;"><strong>Felicidad Base:</strong> @Model.BaseHappiness</li>
+                        <li class="list-group-item" style="background: transparent; border: none; color: #ffffff;"><strong>Dificultad de Captura:</strong> @Model.CaptureRate</li>
+                        <li class="list-group-item" style="background: transparent; border: none; color: #ffffff;"><strong>Legendario:</strong> @(Model.IsLegendary ? "Sí" : "No")</li>
+                        <li class="list-group-item" style="background: transparent; border: none; color: #ffffff;"><strong>Color:</strong> @Model.Color?.Name</li>
+                        <li class="list-group-item" style="background: transparent; border: none; color: #ffffff;"><strong>Hábitat:</strong> @Model.Habitat?.Name</li>
+                        <li class="list-group-item" style="background: transparent; border: none; color: #ffffff;"><strong>Forma:</strong> @Model.Shape?.Name</li>
+                        <li class="list-group-item" style="background: transparent; border: none; color: #ffffff;">
+                            <strong>Descripción:</strong>
+                            <p class="mb-0">@Model.SpanishFlavorText</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Pie de Card con botón para volver -->
+        <div class="card-footer text-center" style="background: linear-gradient(135deg, #ff4b2b, #ff416c); padding: 15px;">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light" style="font-family: 'Press Start 2P', cursive;">
+                Volver al Home
+            </a>
+        </div>
+    </div>
+</div>
