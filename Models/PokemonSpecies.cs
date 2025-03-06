@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace Pokedex.Models
 {
@@ -25,11 +24,11 @@ namespace Pokedex.Models
         [JsonProperty("flavor_text_entries")]
         public List<FlavorTextEntry> FlavorTextEntries { get; set; }
 
-        // Propiedad calculada para obtener la URL de la imagen
+
         [JsonIgnore]
         public string ImageUrl => $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{Id}.png";
 
-        // Propiedad para extraer la descripción en español, si existe
+ 
         [JsonIgnore]
         public string SpanishFlavorText
         {
@@ -41,7 +40,6 @@ namespace Pokedex.Models
         }
     }
 
-    // Clase para el flavor text
     public class FlavorTextEntry
     {
         [JsonProperty("flavor_text")]
@@ -49,7 +47,7 @@ namespace Pokedex.Models
         public NamedAPIResource Language { get; set; }
     }
 
-    // Modelo reutilizable para recursos con nombre y URL
+
     public class NamedAPIResource
     {
         public string Name { get; set; }

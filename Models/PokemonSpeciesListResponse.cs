@@ -14,7 +14,7 @@ namespace Pokedex.Models
         public string Name { get; set; }
         public string Url { get; set; }
 
-        // Propiedad calculada para obtener el Id desde la URL
+
         [JsonIgnore]
         public int Id
         {
@@ -28,7 +28,7 @@ namespace Pokedex.Models
             }
         }
 
-        // Propiedad calculada para obtener la URL de la imagen
+
         [JsonIgnore]
         public string ImageUrl => $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{Id}.png";
     }
