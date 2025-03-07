@@ -15,7 +15,7 @@ namespace Pokedex.Services
         // Obtiene una lista de especies (limitada a 100)
         public async Task<List<PokemonSpeciesListItem>> GetPokemonSpeciesAsync()
         {
-            var response = await _httpClient.GetStringAsync("https://pokeapi.co/api/v2/pokemon-species?limit=400");
+            var response = await _httpClient.GetStringAsync("https://pokeapi.co/api/v2/pokemon-species?limit=1025");
             var speciesListResponse = JsonConvert.DeserializeObject<PokemonSpeciesListResponse>(response);
             return speciesListResponse?.Results ?? new List<PokemonSpeciesListItem>();
         }

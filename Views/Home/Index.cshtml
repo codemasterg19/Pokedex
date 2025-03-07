@@ -1,11 +1,32 @@
-﻿
+﻿@model Pokedex.ViewModels.PokemonSpeciesListViewModel
+
+@{
+    int totalPages = Model.TotalPages;
+    int currentPage = Model.PageNumber;
+    int maxButtons = 5; // cantidad máxima de botones de página a mostrar
+
+    int startPage = currentPage - 2;
+    int endPage = currentPage + 2;
+
+    if (startPage < 1)
+    {
+        startPage = 1;
+        endPage = Math.Min(totalPages, maxButtons);
+    }
+    if (endPage > totalPages)
+    {
+        endPage = totalPages;
+        startPage = Math.Max(1, totalPages - maxButtons + 1);
+    }
+}
+
 <div class="container-fluid p-5" style="background-color: #2d2d2d;">
     <div class="text-center mb-5">
         <h1 style="font-family: 'Press Start 2P', cursive; color: #e91e63;">Pokédex</h1>
         <p style="font-family: 'Press Start 2P', cursive; color: #ffffff;">¡Explora todas las especies Pokémon!</p>
     </div>
     <div class="row justify-content-center">
-        @foreach (var species in Model)
+        @foreach (var species in Model.Species)
         {
             <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card text-center shadow" style="background-color: rgba(66,66,66,0.9); border: none; border-radius: 20px; overflow: hidden;">
@@ -26,4 +47,52 @@
             </div>
         }
     </div>
+
+    <!-- Controles de Paginación -->
+    <nav aria-label="Page navigation example">
+        <!-- Agregamos overflow-x para que, en caso extremo, se pueda hacer scroll horizontal -->
+        <ul class="pagination justify-content-center" style="overflow-x:auto;">
+            <!-- Botón Anterior -->
+            <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(currentPage - 1)">Anterior</a>
+            </li>
+
+            <!-- Primer botón y puntos suspensivos si no se muestran todas las páginas -->
+            @if (startPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" asp-route-page="1">1</a>
+                </li>
+                @if (startPage > 2)
+                {
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                }
+            }
+
+            <!-- Botones de página centrados -->
+            @for (int i = startPage; i <= endPage; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                </li>
+            }
+
+            <!-- Último botón y puntos suspensivos si no se muestran todas las páginas -->
+            @if (endPage < totalPages)
+            {
+                @if (endPage < totalPages - 1)
+                {
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                }
+                <li class="page-item">
+                    <a class="page-link" asp-action="Index" asp-route-page="@totalPages">@totalPages</a>
+                </li>
+            }
+
+            <!-- Botón Siguiente -->
+            <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-page="@(currentPage + 1)">Siguiente</a>
+            </li>
+        </ul>
+    </nav>
 </div>

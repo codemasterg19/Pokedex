@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Pokedex.Models;
 using Pokedex.Services;
+using Pokedex.ViewModels;
 
 namespace Pokedex.Controllers;
 
@@ -16,10 +17,25 @@ public class HomeController : Controller
         _speciesService = speciesService;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int page = 1)
     {
+        int pageSize = 25;
         var species = await _speciesService.GetPokemonSpeciesAsync();
-        return View(species);
+        int totalSpecies = species.Count;
+
+        var speciesToDisplay = species
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        var viewModel = new PokemonSpeciesListViewModel
+        {
+            Species = speciesToDisplay,
+            PageNumber = page,
+            TotalPages = (int)Math.Ceiling(totalSpecies / (double)pageSize)
+        };
+
+        return View(viewModel);
     }
 
     // Muestra el detalle de una especie (nombre e imagen)
